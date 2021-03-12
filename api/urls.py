@@ -1,11 +1,18 @@
 from django.conf.urls import url
 from django.urls import path, include
-from .views import CountCompletedAssignments, GetCourseAverageGrade, CountAssignmentsCreated, SchoolAssignmentCompletionPercentage
+from rest_framework import routers
+from .views import StudentViewSet, StudentSubmissionViewSet, TeacherViewSet, CourseViewSet, CourseWorkViewSet
+
+router = routers.SimpleRouter()
+
+router.register(r'students', StudentViewSet)
+router.register(r'student_submissions', StudentSubmissionViewSet)
+router.register(r'teachers', TeacherViewSet)
+router.register(r'courses', CourseViewSet)
+router.register(r'coursework', CourseWorkViewSet)
 
 app_name = 'api'
+
 urlpatterns = [
-    url(r'^CountCompletedAssignments/$', CountCompletedAssignments.as_view()),
-    url(r'^GetCourseAverageGrade/$', GetCourseAverageGrade.as_view()),
-    url(r'^CountAssignmentsCreated/$', CountAssignmentsCreated.as_view()),
-    url(r'^SchoolAssignmentCompletionPercentage/$', SchoolAssignmentCompletionPercentage.as_view()),
+    url(r'^', include(router.urls)),
 ]
